@@ -1,26 +1,36 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/Black"
-    tools:context=".MainActivity" >
-
+    android:layout_height="match_parent" 
+    android:background="@color/Black">
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/placeholder" />
+        android:padding="0dp"
+        android:paddingBottom="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_margin="0dp"
+        android:src="@drawable/placeholder2" />
 
       <ImageButton
           android:id="@+id/shutterButton"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentRight="true"
-          android:layout_alignTop="@+id/imageView1"
+          android:layout_alignParentTop="true"
           android:src="@drawable/cameraicon2" />
+
+      <com.twotoasters.android.horizontalimagescroller.widget.HorizontalImageScroller
+          android:id="@+id/Scroller1"
+          style="@style/ToasterHorizontalImageScroller"
+          android:layout_alignParentBottom="true"
+          android:layout_alignParentLeft="true"
+          android:visibility="visible" >
+
+      </com.twotoasters.android.horizontalimagescroller.widget.HorizontalImageScroller>
 
 </RelativeLayout>

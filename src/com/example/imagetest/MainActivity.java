@@ -124,7 +124,6 @@ public class MainActivity extends Activity {
 		
 		// This is a dummy image that I have to add to the horizontal scroller at the start,Seems like a bug .
 		images.add(new ImageToLoadDrawableResource(R.drawable.ic_launcher));
-		scroller.setImageSize(100); 
 		scroller.setVisibility(View.INVISIBLE);
 		
 		 //Log.d("Size","size"+ String.valueOf(this.getWindowManager().getDefaultDisplay().getWidth()-mImageView.getHeight()));
@@ -409,7 +408,7 @@ public class MainActivity extends Activity {
     void LoadFiles(File f)
     {
         
-        
+        scroller.setImageSize(100); 
 // Alternative way of loading the files by listing all the filters in the folder .
 //        File[] files = f.listFiles();
 //        fileList.clear();
@@ -424,8 +423,9 @@ public class MainActivity extends Activity {
         for (int i=0;i<imageFilters.length;i++)
         	images.add(new ImageToLoadSD(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Tesseract/"+imageFilters[i]+".png"));
         
+        if(images.size()==7)
         images.remove(0); // Removing the first image we inserted ..Nasty hack but cant help it !
-	
+        
      
        
       }   
@@ -444,140 +444,140 @@ public class MainActivity extends Activity {
 	};
     
     
-    public void applyFiltertoView(String filterName)
-    {
-    	
-    	Toast.makeText(MainActivity.this, filterName, Toast.LENGTH_SHORT).show();
-    	
-    	Bitmap modifiedBitmap=Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth(),myBitmap.getHeight(), true);
-    	
-    	
-    	Canvas imageViewCanvas=new Canvas(modifiedBitmap);
-    	imageViewCanvas.drawBitmap(modifiedBitmap, 0, 0, new Paint());
-    	
-    	ColorMatrix cm = new ColorMatrix();
-    	
-    	if (filterName.equalsIgnoreCase("stark")) {
+	 public void applyFiltertoView(String filterName)
+	    {
+	      
+	      //Toast.makeText(MainActivity.this, filterName, Toast.LENGTH_SHORT).show();
+	      
+	      Bitmap modifiedBitmap=Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth(),myBitmap.getHeight(), true);
+	      
+	      
+	      Canvas imageViewCanvas=new Canvas(modifiedBitmap);
+	      imageViewCanvas.drawBitmap(modifiedBitmap, 0, 0, new Paint());
+	      
+	      ColorMatrix cm = new ColorMatrix();
+	      
+	      if (filterName.equalsIgnoreCase("stark")) {
 
-			Paint spaint = new Paint();
-			ColorMatrix scm = new ColorMatrix();
+	      Paint spaint = new Paint();
+	      ColorMatrix scm = new ColorMatrix();
 
-			scm.setSaturation(0);
-			final float m[] = scm.getArray();
-			final float c = 1;
-			scm.set(new float[] { m[0] * c, m[1] * c, m[2] * c, m[3] * c, m[4] * c + 15, m[5] * c, m[6] * c,
-					m[7] * c, m[8] * c, m[9] * c + 8, m[10] * c, m[11] * c, m[12] * c, m[13] * c, m[14] * c + 10,
-					m[15], m[16], m[17], m[18], m[19] });
+	      scm.setSaturation(0);
+	      final float m[] = scm.getArray();
+	      final float c = 1;
+	      scm.set(new float[] { m[0] * c, m[1] * c, m[2] * c, m[3] * c, m[4] * c + 15, m[5] * c, m[6] * c,
+	          m[7] * c, m[8] * c, m[9] * c + 8, m[10] * c, m[11] * c, m[12] * c, m[13] * c, m[14] * c + 10,
+	          m[15], m[16], m[17], m[18], m[19] });
 
-			spaint.setColorFilter(new ColorMatrixColorFilter(scm));
-			Matrix smatrix = new Matrix();
-			imageViewCanvas.drawBitmap(modifiedBitmap, smatrix, spaint);
+	      spaint.setColorFilter(new ColorMatrixColorFilter(scm));
+	      Matrix smatrix = new Matrix();
+	      imageViewCanvas.drawBitmap(modifiedBitmap, smatrix, spaint);
 
-			cm.set(new float[] { 1, 0, 0, 0, -90, 0, 1, 0, 0, -90, 0, 0, 1, 0, -90, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, -90, 0, 1, 0, 0, -90, 0, 0, 1, 0, -90, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("sunnyside")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("sunnyside")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, 10, 0, 1, 0, 0, 10, 0, 0, 1, 0, -60, 0, 0, 0, 1, 0 });
-		}
-		else if (filterName.equalsIgnoreCase("worn")) {
+	      cm.set(new float[] { 1, 0, 0, 0, 10, 0, 1, 0, 0, 10, 0, 0, 1, 0, -60, 0, 0, 0, 1, 0 });
+	    }
+	    else if (filterName.equalsIgnoreCase("worn")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, -60, 0, 1, 0, 0, -60, 0, 0, 1, 0, -90, 0, 0, 0, 1, 0 });
-		}
-		else if (filterName.equalsIgnoreCase("grayscale")) {
+	      cm.set(new float[] { 1, 0, 0, 0, -60, 0, 1, 0, 0, -60, 0, 0, 1, 0, -90, 0, 0, 0, 1, 0 });
+	    }
+	    else if (filterName.equalsIgnoreCase("grayscale")) {
 
-			float[] matrix = new float[] { 0.3f, 0.59f, 0.11f, 0, 0, 0.3f, 0.59f, 0.11f, 0, 0, 0.3f, 0.59f, 0.11f,
-					0, 0, 0, 0, 0, 1, 0, };
+	      float[] matrix = new float[] { 0.3f, 0.59f, 0.11f, 0, 0, 0.3f, 0.59f, 0.11f, 0, 0, 0.3f, 0.59f, 0.11f,
+	          0, 0, 0, 0, 0, 1, 0, };
 
-			cm.set(matrix);
+	      cm.set(matrix);
 
-		}
-		else if (filterName.equalsIgnoreCase("cool")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("cool")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, 10, 0, 1, 0, 0, 10, 0, 0, 1, 0, 60, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, 10, 0, 1, 0, 0, 10, 0, 0, 1, 0, 60, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("filter0")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("filter0")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, 30, 0, 1, 0, 0, 10, 0, 0, 1, 0, 20, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, 30, 0, 1, 0, 0, 10, 0, 0, 1, 0, 20, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("filter1")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("filter1")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, -33, 0, 1, 0, 0, -8, 0, 0, 1, 0, 56, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, -33, 0, 1, 0, 0, -8, 0, 0, 1, 0, 56, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("filter2")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("filter2")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, -42, 0, 1, 0, 0, -5, 0, 0, 1, 0, -71, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, -42, 0, 1, 0, 0, -5, 0, 0, 1, 0, -71, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("filter3")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("filter3")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, -68, 0, 1, 0, 0, -52, 0, 0, 1, 0, -15, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, -68, 0, 1, 0, 0, -52, 0, 0, 1, 0, -15, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("filter4")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("filter4")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, -24, 0, 1, 0, 0, 48, 0, 0, 1, 0, 59, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, -24, 0, 1, 0, 0, 48, 0, 0, 1, 0, 59, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("filter5")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("filter5")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, 83, 0, 1, 0, 0, 45, 0, 0, 1, 0, 8, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, 83, 0, 1, 0, 0, 45, 0, 0, 1, 0, 8, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("filter6")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("filter6")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, 80, 0, 1, 0, 0, 65, 0, 0, 1, 0, 81, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, 80, 0, 1, 0, 0, 65, 0, 0, 1, 0, 81, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("filter7")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("filter7")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, -44, 0, 1, 0, 0, 38, 0, 0, 1, 0, 46, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, -44, 0, 1, 0, 0, 38, 0, 0, 1, 0, 46, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("filter8")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("filter8")) {
 
-			cm.set(new float[] { 1, 0, 0, 0, 84, 0, 1, 0, 0, 63, 0, 0, 1, 0, 73, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, 84, 0, 1, 0, 0, 63, 0, 0, 1, 0, 73, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("random")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("random")) {
 
-			//pick an integer between -90 and 90 apply
-			int min = -90;
-			int max = 90;
-			Random rand = new Random();
+	      //pick an integer between -90 and 90 apply
+	      int min = -90;
+	      int max = 90;
+	      Random rand = new Random();
 
-			int five = rand.nextInt(max - min + 1) + min;
-			int ten = rand.nextInt(max - min + 1) + min;
-			int fifteen = rand.nextInt(max - min + 1) + min;
+	      int five = rand.nextInt(max - min + 1) + min;
+	      int ten = rand.nextInt(max - min + 1) + min;
+	      int fifteen = rand.nextInt(max - min + 1) + min;
 
-			Log.d(TAG, "five " + five);
-			Log.d(TAG, "ten " + ten);
-			Log.d(TAG, "fifteen " + fifteen);
+	      Log.d(TAG, "five " + five);
+	      Log.d(TAG, "ten " + ten);
+	      Log.d(TAG, "fifteen " + fifteen);
 
-			cm.set(new float[] { 1, 0, 0, 0, five, 0, 1, 0, 0, ten, 0, 0, 1, 0, fifteen, 0, 0, 0, 1, 0 });
+	      cm.set(new float[] { 1, 0, 0, 0, five, 0, 1, 0, 0, ten, 0, 0, 1, 0, fifteen, 0, 0, 0, 1, 0 });
 
-		}
-		else if (filterName.equalsIgnoreCase("sepia")) {
+	    }
+	    else if (filterName.equalsIgnoreCase("sepia")) {
 
-			float[] sepMat = { 0.3930000066757202f, 0.7689999938011169f, 0.1889999955892563f, 0, 0,
-					0.3490000069141388f, 0.6859999895095825f, 0.1679999977350235f, 0, 0, 0.2720000147819519f,
-					0.5339999794960022f, 0.1309999972581863f, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 };
-			cm.set(sepMat);
-		}
-    	
-    	Paint paint =new Paint();
-    	
-    	paint.setColorFilter(new ColorMatrixColorFilter(cm));
-		Matrix matrix = new Matrix();
-		
-		imageViewCanvas.drawBitmap(modifiedBitmap, matrix, paint);
-		mImageView.setImageBitmap(modifiedBitmap);
-	
-    	
-    }
+	      float[] sepMat = { 0.3930000066757202f, 0.7689999938011169f, 0.1889999955892563f, 0, 0,
+	          0.3490000069141388f, 0.6859999895095825f, 0.1679999977350235f, 0, 0, 0.2720000147819519f,
+	          0.5339999794960022f, 0.1309999972581863f, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 };
+	      cm.set(sepMat);
+	    }
+	      
+	      Paint paint =new Paint();
+	      
+	      paint.setColorFilter(new ColorMatrixColorFilter(cm));
+	    Matrix matrix = new Matrix();
+	    
+	    imageViewCanvas.drawBitmap(modifiedBitmap, matrix, paint);
+	    mImageView.setImageBitmap(modifiedBitmap);
+	  
+	      
+	    }
     
     
     
@@ -585,7 +585,8 @@ public class MainActivity extends Activity {
 	class MyOnClickListener implements View.OnClickListener{
 
 		public void onClick(View v) {
-			
+				if(images.size()>1)
+					images.clear();
 			    Intent camera_intent=new Intent(getBaseContext(),CustomClickActivity.class);
 			    startActivityForResult(camera_intent,1337);
 		
