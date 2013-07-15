@@ -125,6 +125,8 @@ public class MainActivity extends Activity {
 		// This is a dummy image that I have to add to the horizontal scroller at the start,Seems like a bug .
 		images.add(new ImageToLoadDrawableResource(R.drawable.ic_launcher));
 		scroller.setVisibility(View.INVISIBLE);
+		//scroller.setHighlightActiveImage(true);
+		//scroller.setImageSize(100);
 		
 		 //Log.d("Size","size"+ String.valueOf(this.getWindowManager().getDefaultDisplay().getWidth()-mImageView.getHeight()));
         
@@ -169,8 +171,12 @@ public class MainActivity extends Activity {
 			    	myBitmap = BitmapFactory.decodeFile(leftimgFile.getAbsolutePath());
 			    	imageViewBitmap = Bitmap.createScaledBitmap(myBitmap, mImageView.getWidth(),mImageView.getHeight(), true);
 				    mImageView.setImageBitmap(imageViewBitmap);
+				    
+				    scroller.invalidate();
+//				    scroller.postInvalidate();
+					scroller.setImageSize(100);
 				    scroller.setVisibility(View.VISIBLE);
-				      
+				    
 				    applyImageFilters();
 		
 			    }
@@ -219,14 +225,14 @@ public class MainActivity extends Activity {
 				 
 
 			 }
-			 
+			 scroller.setImageSize(100); 
 			 // Load the Instagrammed Pictures into the Horizontal Image Scroller ..
-			 
+			  scroller.invalidate();
 			 // Getting the list of files in the Tesseract Directory
 		        File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/Tesseract/");
 		        
 		        LoadFiles(root);
-		        scroller.invalidate();
+		       
 		    //  scroller.setVisibility(0);
 		     // scroller.bringToFront();
 //		        scroller.postInvalidate();
